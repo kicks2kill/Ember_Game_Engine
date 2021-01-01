@@ -3,4 +3,4 @@
 
 This project will have minimal dependencies and will be written in C
 
-Also, currently I am at the very beginning of setting up this engine. As it stands right now, it is mostly code learning openGL that I will replace as I become more experienced with creating a renderer
+Also, currently I am at the very beginning of setting up this engine; using cglm, SDL2, openGL and std libraries in C.
