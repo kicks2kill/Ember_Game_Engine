@@ -60,6 +60,14 @@ typedef struct {
 } vec3;
 
 vec3 vec3_new(float, float, float);
+vec3 vec3_red();
+vec3 vec3_green();
+vec3 vec3_blue();
+vec3 vec3_black();
+vec3 vec3_white();
+vec3 vec3_grey();
+vec3 vec3_lgrey();
+vec3 vec3_dgrey();
 vec3 vec3_zero();
 vec3 vec3_one();
 
@@ -91,6 +99,8 @@ vec3 vec3_reflect(vec3,vec3);
 
 bool vec3_equal(vec3, vec3);
 bool vec3_neq(vec3,vec3);
+
+
 
 //Get file system path
 typedef struct {

@@ -224,6 +224,49 @@ vec3 vec3_new(float x, float y, float z)
   return v;
 }
 
+/* Colors  */
+vec3 vec3_red()
+{
+  return vec3_new(1,0,0);
+}
+
+vec3 vec3_green()
+{
+  return vec3_new(0,1,0);
+}
+
+vec3 vec3_blue()
+{
+  return vec3_new(0,0,1);
+}
+
+vec3 vec3_black()
+{
+  return vec3_new(0,0,0);
+}
+
+vec3 vec3_white()
+{
+  return vec3_new(1,1,1);
+}
+
+vec3 vec3_grey()
+{
+  return vec3_new(0.5,0.5,0.5);
+}
+
+vec3 vec3_lgrey()
+{
+  return vec3_new(0.75, 0.75, 0.75);
+}
+
+vec3 vec3_dgrey()
+{
+  return vec3_new(0.25,0.25,0.25);
+}
+
+/* Fill with 0s or 1s */
+
 vec3 vec3_zero()
 {
   return vec3_new(0,0,0);
@@ -233,6 +276,8 @@ vec3 vec3_one()
 {
   return vec3_new(1,1,1);
 }
+
+/* Standard Functions */
 
 vec3 vec3_add(vec3 v1, vec3 v2)
 {
