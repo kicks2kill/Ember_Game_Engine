@@ -52,10 +52,44 @@ bool vec2_equal(vec2,vec2);
 vec2 vec2_lerp(vec2, vec2, float amount);
 
 
+/* 3D Math */
+typedef struct {
+  float x;
+  float y;
+  float z;
+} vec3;
+
+vec3 vec3_new(float, float, float);
+vec3 vec3_zero();
+vec3 vec3_one();
+
+vec3 vec3_add(vec3, vec3);
+vec3 vec3_sub(vec3,vec3);
+vec3 vec3_mul(vec3,float fac);
+vec3 vec3_mult_vec3(vec3, vec3);
+vec3 vec3_div(vec3, float fac);
+vec3 vec3_div_vec3(vec3, vec3);
+vec3 vec3_pow(vec3, float fac);
+vec3 vec3_neg(vec3);
+vec3 vec3_abs(vec3);
+vec3 vec3_floor(vec3);
+vec3 vec3_fmod(vec3, float val);
+
+void vec3_print(vec3);
+
+float vec3_dot(vec3, vec3);
+float vec3_length(vec3);
+float vec3_length_sqrd(vec3);
+float vec3_dist(vec3,vec3);
+
+vec3 vec3_cross(vec3,vec3);
+
+
+bool vec3_equal(vec3, vec3);
+bool vec3_neq(vec3,vec3);
+
 //Get file system path
 typedef struct {
   char ptr[MAX_PATH];
 } fpath;
-
-
 

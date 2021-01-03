@@ -29,6 +29,7 @@ bool between(float x, flaot bottom, float top)
   return (x > bottom) && (x < top);
 }
 
+
 /* 2D Math Functions */
 
 vec2 vec2_new(float x, float y)
@@ -139,6 +140,11 @@ vec2 vec2_clamp(vec2 v, float b, float t)
   return v;
 }
 
+float vec2_dot(vec2 v1, vec2 v2)
+{
+  return (v1.x * v2.x) + (v1.y * v2.y);
+}
+
 vec2 vec2_length_sqrd(vec2 v)
 {
   float length = 0.0;
@@ -206,3 +212,157 @@ vec2 vec2_lerp(vec2 v1, vec2 v2, float amount)
   v.y = lerp(v1.y, v2.y, amount);
   return v;
 }
+
+/* 3D Math Functions */
+
+vec3 vec3_new(float x, float y, float z)
+{
+  vec3 v;
+  v.x = x;
+  v.y = y;
+  v.z = z;
+  return v;
+}
+
+vec3 vec3_zero()
+{
+  return vec3_new(0,0,0);
+}
+
+vec3 vec3_one()
+{
+  return vec3_new(1,1,1);
+}
+
+vec3 vec3_add(vec3 v1, vec3 v2)
+{
+  vec3 v;
+  v.x = v1.x + v2.x;
+  v.y = v1.y + v2.y;
+  v.z = v1.z + v2.z;
+  return v;
+}
+
+vec3 vec3_sub(vec3 v1, vec3 v2)
+{
+  vec3 v;
+  v.x = v1.x - v2.x;
+  v.y = v1.y - v2.y;
+  v.z = v1.z - v2.z;
+  return v;
+}
+
+vec3 vec3_mul(vec3 v, float fac)
+{
+  v.x = v.x * fac;
+  v.y = v.y * fac;
+  v.z = v.z * fac;
+  return v;
+}
+
+vec3 vec3_mult_vec3(vec3 v1, vec3 v2)
+{
+  vec3 v;
+  v.x = v1.x * v2.x;
+  v.y = v1.y * v2.y;
+  v.z = v1.z * v2.z;
+  return v;
+}
+
+vec3 vec3_div(vec3 v, float fac)
+{
+  v.x = v.x * fac;
+  v.y = v.y * fac;
+  v.z = v.z * fac;
+  return v;
+}
+
+vec3 vec3_div_vec3(vec3 v1, vec3 v2)
+{
+  vec3 v;
+  v.x = v1.x / v2.x;
+  v.y = v1.y / v2.y;
+  v.z = v1.z / v2.z;
+  return v;
+}
+
+vec3 vec3_pow(vec3 v, float exp)
+{
+  v.x = pow(v.x, exp);
+  v.y = pow(v.y, exp);
+  v.z = pow(v.z, exp);
+  return v;
+}
+
+vec3 vec3_neg(vec3 v)
+{
+  v.x = -v.x;
+  v.y = -v.y;
+  v.z = -v.z;
+  return v;
+}
+
+vec3 vec3_abs(vec3 v)
+{
+  v.x = fabs(v.x);
+  v.y = fabs(v.y);
+  v.z = fabs(v.z);
+  return v;
+}
+
+vec3 vec3_floor(vec3 v)
+{
+  v.x = floor(v.x);
+  v.y = floor(v.y);
+  v.z = floor(v.z);
+  return v;
+}
+
+vec3 vec3_fmod(vec3 v, float val)
+{
+  v.x = fmod(v.x, val);
+  v.y = fmod(v.y, val);
+  v.z = fmod(v.z, val);
+  return v;
+}
+
+void vec3_print(vec3 v)
+{
+  printf("vec3(%4.2f, %4.2f, %4.2f)", v.x, v.y, v.z);
+}
+
+float vec3_dot(vec3 v1, vec3 v2)
+{
+  return (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
+}
+
+float vec3_length_sqrd(vec3 v)
+{
+  float length = 0.0;
+  length += v.x * v.x;
+  length += v.y * v.y;
+  length += v.z * v.z;
+  return length;
+}
+
+float vec3_length(vec3 v)
+{
+  return sqrt(vec3_length_sqrd(v));
+}
+
+float vec3_dist(vec3 v1, vec3 v2)
+{
+  return sqrt(vec3_dist_sqrd(v1,v2));
+}
+
+vec3 vec3_cross(vec3 v1, vec3 v2)
+{
+  vec3 v;
+  v.x = (v1.y * v2.z) - (v1.z * v2.y);
+  v.y = (v1.z * v2.x) - (v1.x * v2.z);
+  v.z = (v1.x * v2.y) - (v1.y * v2.x);
+  return v;
+}
+
+//Add a lerp, neq, equ, from_string, project, normalize and reflect
+
