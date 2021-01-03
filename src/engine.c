@@ -364,5 +364,60 @@ vec3 vec3_cross(vec3 v1, vec3 v2)
   return v;
 }
 
-//Add a lerp, neq, equ, from_string, project, normalize and reflect
 
+vec3 vec3_lerp(vec3 v1, vec3 v2, float amount)
+{
+  vec3 v;
+  v.x = lerp(v1.x, v2.x, amount);
+  v.y = lerp(v1.y,v2.y, amount);
+  v.z = lerp(v1.z, v2.z, amount);
+  return v;
+}
+vec3 vec3_to_array(vec3 v, float *out)
+{
+  out[0] = v.x;
+  out[1] = v.y;
+  out[2] = v.z;
+}
+
+vec3 vec3_from_string(char* s)
+{
+  char* ptrEnd;
+  double d1, d2, d3;
+  d1 = strtod(s, &ptrEnd);
+  d2 = strtod(ptrEnd, &ptrEnd);
+  d3 = strtod(ptrEnd, NULL);
+
+  vec3 v;
+  v.x = d1;
+  v.y = d2;
+  v.z = d3;
+
+  return v;
+}
+
+vec3 vec3_project(vec3 v1, vec3 v2)
+{
+  return vec3_sub(v1, vec3_mul(v2, vec3_dot(v1,v2)));
+}
+
+vec3 vec3_reflect(vec3 v1, vec3 v2)
+{
+  return vec3_sub(v1, vec3_mul(v2, 2 * vec3_dot(v1,v2)));
+}
+
+bool vec3_equal(vec3 v1, vec3 v2)
+{
+  if(v1.x != v2.x) {return false;}
+  if(v1.y != v2.y) {return false;}
+  if(v1.z != v2.z) {return false;}
+  return true;
+}
+
+bool vec3_neq(vec3 v1, vec3 v2)
+{
+  if(v1.x != v2.x) {return true;}
+  if(v1.y != v2.y) {return true;}
+  if(v1.z != v2.z) {return true;}
+  return false;
+}

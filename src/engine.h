@@ -76,6 +76,7 @@ vec3 vec3_floor(vec3);
 vec3 vec3_fmod(vec3, float val);
 
 void vec3_print(vec3);
+void vec3_to_array(vec3, float *out);
 
 float vec3_dot(vec3, vec3);
 float vec3_length(vec3);
@@ -83,7 +84,10 @@ float vec3_length_sqrd(vec3);
 float vec3_dist(vec3,vec3);
 
 vec3 vec3_cross(vec3,vec3);
-
+vec3 vec3_lerp(vec3,vec3,float amount);
+vec3 vec3_from_string(char*);
+vec3 vec3_project(vec3, vec3);
+vec3 vec3_reflect(vec3,vec3);
 
 bool vec3_equal(vec3, vec3);
 bool vec3_neq(vec3,vec3);
