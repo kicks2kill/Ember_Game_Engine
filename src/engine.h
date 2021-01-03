@@ -1,14 +1,20 @@
-
+#include "common.h"
 /* Vector Maths */
 
 /* 2D */
-
 
 typedef struct {
   float x;
   float y;
 } vec2;
 
+/* Helper Functions */
+float max(float, float);
+float min(float, float);
+float clamp(float, float, float);
+float lerp(float, float, float);
+
+bool between(float, float, float);
 
 vec2 vec2_new(float x, float y);
 vec2 vec2_zero();
