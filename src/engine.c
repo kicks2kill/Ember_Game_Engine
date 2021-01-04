@@ -746,6 +746,16 @@ vec4 vec4_to_array(vec4 v, float* out)
   out[3] = v.w;
 }
 
+vec4 vec4_lerp(vec4 v1, vec4 v2, float amount)
+{
+  vec4 v;
+  v.x = lerp(v1.x, v2.x, amount);
+  v.y = lerp(v1.y, v2.y, amount);
+  v.z = lerp(v1.z, v2.z, amount);
+  v.w = lerp(v1.w, v2.w, amount);
+  return v;
+}
+
 
 /* Framerate info */
 

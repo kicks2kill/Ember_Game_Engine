@@ -155,6 +155,42 @@ void vec4_to_array(vec4, float* out);
 
 vec4 vec4_lerp(vec4, vec4, float amount);
 
+/* Quaternions */
+//TODO
+typedef vec4 quat;
+
+quat quat_id();
+quat quat_new(float,float,float,float);
+quat quat_roation_x(float);
+quat quat_rotation_y(float);
+quat quat_rotation_z(float);
+quat quat_from_euler(vec3);
+
+/* Matrice Math */
+/* 2D Matrices */
+typedef struct
+{
+  float xx;
+  float xy;
+  float yx;
+  float yy;
+} mat2;
+
+mat2 mat2_id();
+mat2 mat2_zero();
+mat2 mat2_new(float, float, float, float);
+mat2 mat2_mult_mat2(mat2,mat2);
+
+vec2 mat2_mult_vec2(mat2, vec2);
+
+mat2 mat2_transpose(mat2);
+mat2 mat2_inverse(mat2);
+mat2 mat2_rotation(float);
+
+void mat2_print(mat2);
+void mat2_to_array(mat2, float* out);
+
+/* 3D Matrices */
 
 
 
