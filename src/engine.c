@@ -468,10 +468,154 @@ bool vec3_neq(vec3 v1, vec3 v2)
 }
 
 /* 4D Math Functions */
-//TODO
+
+vec4 vec4_new(float x, float y, float z, float w)
+{
+  vec4 v;
+  v.x = v;
+  v.y = y;
+  v.z = z;
+  v.w = w;
+  return v;
+}
+
+vec4 vec4_zero()
+{
+  return vec4_new(0,0,0,0);
+}
+
+vec4 vec4_one()
+{
+  return vec4_new(1,1,1,1);
+}
+
+vec4 vec4_red()
+{
+  return vec4_new(1,0,0,1);
+}
+
+vec4 vec4_green()
+{
+  return vec4_new(0,1,0,1);
+}
+
+vec4 vec4_blue()
+{
+  return vec4_new(0,0,1,1);
+}
+
+vec4 vec4_white()
+{
+  return vec4_new(1,1,1,1);
+}
+
+vec4 vec4_black()
+{
+  return vec4_new(0,0,0,1);
+}
+
+vec4 vec4_grey()
+{
+  return vec4_new(0.5,0.5,0.5, 1);
+}
+
+vec4 vec4_lgrey()
+{
+  return vec4_new(0.75,0.75,0.75,1);
+}
+
+vec4 vec4_dgrey()
+{
+  return vec4_new(0.25,0.25,0.25,1);
+}
+
+vec4 vec4_add(vec4 v1, vec4 v2)
+{
+  vec4 v;
+  v.x = v1.x + v2.x;
+  v.y = v1.y + v2.y;
+  v.z = v1.z + v2.z;
+  v.w = v1.w + v2.w;
+  return v;
+}
 
 
+vec4 vec4_sub(vec4 v1, vec4 v2)
+{
+  vec4 v;
+  v.x = v1.x - v2.x;
+  v.y = v1.y - v2.y;
+  v.z = v1.z - v2.z;
+  v.w = v1.w - v2.w;
+  return v;
+}
 
+vec4 vec4_mul(vec4 v1, float fac)
+{
+  vec4 v;
+  v.x = v1.x * fac;
+  v.y = v1.y * fac;
+  v.z = v1.z * fac;
+  v.w = v1.w * fac;
+  return v;
+}
+
+vec4 vec4_div(vec4 v1, float fac)
+{
+  vec4 v;
+  v.x = v1.x / fac;
+  v.y = v1.y / fac;
+  v.z = v1.z / fac;
+  v.w = v1.w / fac;
+  return v;
+}
+
+vec4 vec4_mult_vec4(vec4 v1, vec4 v2)
+{
+  vec4 v;
+  v.x = v1.x * v2.x;
+  v.y = v1.y * v2.y;
+  v.z = v1.z * v2.z;
+  v.w = v1.w * v2.w;
+  return v;
+}
+
+
+vec4 vec4_abs(vec4 v)
+{
+  v.x = fabs(v.x);
+  v.y = fabs(v.y);
+  v.z = fabs(v.z);
+  v.w = fabs(v.w);
+  return v;
+}
+
+vec4 vec4_floor(vec4 v)
+{
+  v.x = floor(v.x);
+  v.y = floor(v.y);
+  v.z = floor(v.z);
+  v.w = floor(v.w);
+  return v;
+}
+
+vec4 vec4_fmod(vec4 v, float val)
+{
+  v.x = fmod(v.x, val);
+  v.y = fmod(v.y, val);
+  v.z = fmod(v.z, val);
+  v.w = fmod(v.w, val);
+  return v;  
+}
+
+vec4 vec4_sqrt(vec4 v)
+{
+  v.x = sqrt(v.x);
+  v.y = sqrt(v.y);
+  v.z = sqrt(v.z);
+  v.w = sqrt(v.w);
+  return v;  
+}
 
 
 /* Framerate info */
