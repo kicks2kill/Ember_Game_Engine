@@ -101,6 +101,16 @@ bool vec3_equal(vec3, vec3);
 bool vec3_neq(vec3,vec3);
 
 
+//TODO 4D
+
+/* Framerate Info */
+void frame_begin();
+void frame_end();
+void frame_end_at_rate(double);
+
+double frame_rate();
+double frame_time();
+char* frame_rate_string();
 
 //Get file system path
 typedef struct {
