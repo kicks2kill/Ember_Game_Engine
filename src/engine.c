@@ -560,16 +560,6 @@ vec4 vec4_mul(vec4 v1, float fac)
   return v;
 }
 
-vec4 vec4_div(vec4 v1, float fac)
-{
-  vec4 v;
-  v.x = v1.x / fac;
-  v.y = v1.y / fac;
-  v.z = v1.z / fac;
-  v.w = v1.w / fac;
-  return v;
-}
-
 vec4 vec4_mult_vec4(vec4 v1, vec4 v2)
 {
   vec4 v;
@@ -580,6 +570,34 @@ vec4 vec4_mult_vec4(vec4 v1, vec4 v2)
   return v;
 }
 
+
+vec4 vec4_div(vec4 v1, float fac)
+{
+  vec4 v;
+  v.x = v1.x / fac;
+  v.y = v1.y / fac;
+  v.z = v1.z / fac;
+  v.w = v1.w / fac;
+  return v;
+}
+
+vec4 vec4_pow(vec4 v, float exp)
+{
+  v.x = pow(v.x, exp);
+  v.y = pow(v.y, exp);
+  v.z = pow(v.z, exp);
+  v.w = pow(v.w, exp);
+  return v;
+}
+
+vec4 vec4_neg(vec4 v)
+{
+  v.x = -v.x;
+  v.y = -v.y;
+  v.z = -v.z;
+  v.w = -v.w;
+  return v;
+}
 
 vec4 vec4_abs(vec4 v)
 {
@@ -615,6 +633,117 @@ vec4 vec4_sqrt(vec4 v)
   v.z = sqrt(v.z);
   v.w = sqrt(v.w);
   return v;  
+}
+
+vec4 vec4_max(vec4 v1, vec4 v2)
+{
+  v1.x = max(v1.x, v2.x);
+  v1.y = max(v1.y, v2.y);
+  v1.z = max(v1.z, v2.z);
+  v1.w = max(v1.w, v2.w);
+  return v1;
+}
+
+vec4 vec4_min(vec4 v1, vec4 v2)
+{
+  v1.x = min(v1.x, v2.x);
+  v1.y = min(v1.y, v2.y);
+  v1.z = min(v1.z, v2.z);
+  v1.w = min(v1.w, v2.w);
+  return v1;
+}
+
+vec4 vec4_equal(vec4 v1, vec4 v2)
+{
+  if(!(v1.x == v2.x)) {return false;}
+  if(!(v1.y == v2.y)) {return false;}
+  if(!(v1.z == v2.z)) {return false;}
+  if(!(v1.w == v2.w)) {return false;}
+  return true;
+}
+
+float vec4_dot(vec4 v1, vec4 v2)
+{
+  return  (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z) + (v1.w * v2.w);
+}
+
+float vec4_length_sqrd(vec4 v)
+{
+  float length = 0.0;
+  length += v.x * v.x;
+  length += v.y * v.y;
+  length += v.z * v.z;
+  length += v.w * v.w;
+  return length;
+}
+
+float vec4_length(vec4 v)
+{
+  return sqrt(vec4_length_sqrd(v));
+}
+
+float vec4_dist_sqrd(vec4 v1, vec4 v2)
+{
+  return (v1.x - v2.x) * (v1.x - v2.x) + 
+    (v1.y - v2.y) * (v1.y - v2.y) +
+    (v1.z - v2.z) * (v1.z - v2.z) +
+    (v1.w - v2.w) * (v1.w - v2.w);
+}
+
+
+float vec4_dist(vec4 v1, vec4 v2)
+{
+  return sqrt(vec4_dist_sqrd(v1,v2));
+}
+
+vec4 vec4_normalize(vec4 v)
+{
+  float len = vec4_lenght(v);
+  if(len == 0.0)
+    {
+      return vec4_zero();
+    } else
+    {
+      return vec4_div(v, len);
+  }
+}
+
+vec4 vec4_reflect(vec4 v1, vec4 v2)
+{
+  return vec4_sub(v1, vec4_mul(v2, 2 * vec4_dot(v1,v2)))
+}
+
+vec4 vec4_from_string(char* s)
+{
+  char* end;
+  double d1,d2,d3,d4;
+  d1 = strtod(s, &end);
+  d2 = strotd(end, &end);
+  d3 = strtod(end, &end);
+  d4 = strtod(end,NULL);
+
+  vec4 v;
+  v.x = d1;
+  v.y = d2;
+  v.z = d3;
+  v.w = d4;
+
+  return v;
+}
+
+
+
+void vec4_print(vec4 v)
+{
+  printf("vec4(%4.2f, %4.2f, %4.2f, %4.2f)", v.x, v.y, v.z,  v.w);
+}
+
+vec4 vec4_to_array(vec4 v, float* out)
+{
+  out[0] = v.x;
+  out[1] = v.y;
+  out[2] = v.z;
+  out[3] = v.w;
 }
 
 
