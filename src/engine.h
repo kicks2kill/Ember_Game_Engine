@@ -100,8 +100,63 @@ vec3 vec3_reflect(vec3,vec3);
 bool vec3_equal(vec3, vec3);
 bool vec3_neq(vec3,vec3);
 
+/* 4D Math Functions */
 
-//TODO 4D
+typedef struct {
+  float x;
+  float y;
+  float z;
+  float w;
+} vec4;
+
+vec4 vec4_new(float,float,float,float);
+vec4 vec4_zero();
+vec4 vec4_one();
+
+vec4 vec4_red();
+vec4 vec4_green();
+vec4 vec4_blue();
+vec4 vec4_white();
+vec4 vec4_black();
+vec4 vec4_grey();
+vec4 vec4_lgrey();
+vec4 vec4_dgrey();
+
+
+vec4 vec4_add(vec4, vec4);
+vec4 vec4_sub(vec4,vec4);
+vec4 vec4_mul(vec4, float fac);
+vec4 vec4_mult_vec4(vec4, vec4);
+vec4 vec4_div(vec4, float fac);
+vec4 vec4_pow(vec4, float fac);
+vec4 vec4_neg(vec4);
+vec4 vec4_abs(vec4);
+vec4 vec4_floor(vec4);
+vec4 vec4_fmod(vec4, float val);
+vec4 vec4_sqrt(vec4);
+
+vec4 vec4_max(vec4,vec4);
+vec4 vec4_min(vec4, vec4);
+
+bool vec4_equal(vec4, vec4);
+
+float vec4_dot(vec4,vec4);
+float vec4_length_sqrd(vec4);
+float vec4_length(vec4);
+float vec4_dist_sqrd(vec4,vec4);
+float vec4_dist(vec4,vec4);
+
+vec4 vec4_normalize(vec4);
+vec4 vec4_reflect(vec4,vec4);
+vec4 vec4_from_string(char*);
+
+void vec4_print(vec4);
+void vec4_to_array(vec4, float* out);
+
+vec4 vec4_lerp(vec4, vec4, float amount);
+
+
+
 
 /* Framerate Info */
 void frame_begin();

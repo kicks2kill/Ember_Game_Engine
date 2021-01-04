@@ -467,8 +467,11 @@ bool vec3_neq(vec3 v1, vec3 v2)
   return false;
 }
 
+/* 4D Math Functions */
+//TODO
 
-//TODO 4D
+
+
 
 
 /* Framerate info */
@@ -536,3 +539,6 @@ char* frame_rate_string()
 {
   return frame_rate_string_var;
 }
+
+
+
