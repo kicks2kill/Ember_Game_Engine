@@ -789,6 +789,21 @@ quat quat_rotation_x(float angle)
   return quat_angle_axis(angle, vec3_new(1,0,0));
 }
 
+quat quat_rotation_y(float angle)
+{
+  return quat_angle_axis(angle, vec3_new(0,1,0));
+}
+
+quat quat_rotation_z(float angle)
+{
+  return quat_angle_axis(angle, vec3_new(0,0,1));
+}
+
+float quat_length(quat q)
+{
+  return sqrtf(q.x*q.x + q.y*q.y +
+               q.z*q.z + q.w*q.w);
+}
 
 quat quat_normalize(quat q)
 {

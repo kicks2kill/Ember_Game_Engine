@@ -176,6 +176,7 @@ vec3 quat_mult_vec3(quat, vec3);
 quat quat_neg(quat);
 quat quat_scale(quat, float);
 
+float quat_length(quat);
 float quat_distance(quat, quat);
 
 
