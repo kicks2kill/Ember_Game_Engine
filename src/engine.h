@@ -156,7 +156,7 @@ void vec4_to_array(vec4, float* out);
 vec4 vec4_lerp(vec4, vec4, float amount);
 
 /* Quaternions */
-//TODO
+//TODO: Add more quaternion functions.
 typedef vec4 quat;
 
 quat quat_id();
