@@ -161,10 +161,12 @@ typedef vec4 quat;
 
 quat quat_id();
 quat quat_new(float,float,float,float);
+quat quat_angle_axis(float, vec3);
 quat quat_roation_x(float);
 quat quat_rotation_y(float);
 quat quat_rotation_z(float);
 quat quat_from_euler(vec3);
+
 
 /* Matrice Math */
 /* 2D Matrices */

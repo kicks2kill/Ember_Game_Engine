@@ -757,6 +757,44 @@ vec4 vec4_lerp(vec4 v1, vec4 v2, float amount)
 }
 
 
+
+/* Quaternions */
+quat quat_id()
+{
+  return new quat_new(0,0,0,1);
+}
+
+quat quat_new(float x, float y, float z, float w)
+{
+  quat q;
+  q.x = x;
+  q.y = y;
+  q.z = z;
+  q.w = w;
+  return q;
+}
+
+quat quat_angle_axis(float angle, vec3 v)
+{
+  float sine = sinf(angle / 2.0f);
+  float cosine = cosf(angle / 2.0f);
+
+  return quat_new(v.x * sine, v.y * sine, v.z * sine,cosine);
+}
+
+
+quat quat_rotation_x(float angle)
+{
+  return quat_angle_axis(angle, vec3_new(1,0,0));
+}
+
+
+
+
+
+
+
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
