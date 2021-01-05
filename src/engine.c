@@ -24,7 +24,7 @@ float lerp(float p1, float p2, float amount)
 }
 
 
-bool between(float x, flaot bottom, float top)
+bool between(float x, float bottom, float top)
 {
   return (x > bottom) && (x < top);
 }
@@ -787,6 +787,63 @@ quat quat_angle_axis(float angle, vec3 v)
 quat quat_rotation_x(float angle)
 {
   return quat_angle_axis(angle, vec3_new(1,0,0));
+}
+
+
+quat quat_normalize(quat q)
+{
+
+  float scale = quat_length(q);
+    return quat_new(
+                    q.x / scale,
+                    q.y / scale,
+                    q.z / scale,
+                    q.w / scale);
+}
+//from_euler and to_euler need to go here
+
+quat quat_mult_quat(quat q1, quat q2)
+{
+  return quat_new(
+                  (q1.w * q2.x) + (q1.x * q2.w) + (q1.y * q2.z) - (q1.z * q2.y),
+                  (q1.w * q2.y) - (q1.x * q2.z) + (q1.y * q2.w) + (q1.z * q2.x),
+                  (q1.w * q2.z) + (q1.x * q2.y) - (q1.y * q2.x) + (q1.z * q2.w),
+                  (q1.w * q2.w) - (q1.x * q2.x) - (q1.y * q2.y) - (q1.z * q2.z));
+}
+
+
+vec3 quat_mult_vec3(quat q, vec3 v)
+{
+  quat worker = q;
+  worker = quat_mult_quat(worker, quat_normalize(quat_new(v.x, v.y, v.z, 0.0)));
+  worker = quat_mult_quat(worker, quat_inverse(q));
+
+  vec3 res = vec3_new(work.x,work.y,work.z);
+
+  return vec3_mul(res,vec3_length(v));
+}
+
+quat quat_neg(quat q)
+{
+  q.x = -q.x;
+  q.y = -q.y;
+  q.z = -q.z;
+  q.w = -q.w;
+  return q;
+}
+
+quat quat_scale(quat q, float fac)
+{
+  q.x = q.x * fac;
+  q.y = q.y * fac;
+  q.z = q.z * fac;
+  q.w = q.w * fac;
+  return q;
+}
+
+float quat_distance(quat q1, quat q1)
+{
+  //TODO
 }
 
 /* Matrice Math */

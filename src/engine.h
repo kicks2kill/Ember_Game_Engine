@@ -166,6 +166,17 @@ quat quat_roation_x(float);
 quat quat_rotation_y(float);
 quat quat_rotation_z(float);
 quat quat_from_euler(vec3);
+quat quat_normalize(quat);
+
+vec3 quat_to_euler(quat);
+
+quat quat_mult_quat(quat,quat);
+vec3 quat_mult_vec3(quat, vec3);
+
+quat quat_neg(quat);
+quat quat_scale(quat, float);
+
+float quat_distance(quat, quat);
 
 
 /* Matrice Math */
