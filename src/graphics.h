@@ -7,7 +7,7 @@
 void graphics_init();
 void graphics_finish();
 
-SDL_GLContext* graphics_new_context();
+SDL_GLContext* graphics_context_new();
 
 void graphics_set_antialiasing(int quality);
 void graphics_set_fullscreen(bool);
@@ -15,8 +15,8 @@ void graphics_set_multisamples(int samples);
 void graphics_set_vsync(bool vsync);
 
 
-void graphics_delete_context(SDL_GLContext* );
-void graphics_current_context(SDL_GLContext*);
+void graphics_context_delete(SDL_GLContext* );
+void graphics_context_current(SDL_GLContext*);
 
 bool graphics_get_fullscreen();
 int graphics_get_antialiasing();

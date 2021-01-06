@@ -923,9 +923,23 @@ mat2 mat2_transpose(mat2 m)
   return m2;
 }
 
+float mat2_det(mat2 m)
+{
+  return m.xx * m.yy - m.xy * m.yx;
+}
+
 mat2 mat2_inverse(mat2 m)
 {
-  //Do we need something else here to detect inverse?
+  float det = mat2_det(m);
+  float fac = 1.0 / det;
+
+  mat2 m2;
+  m2.xx = fac * m.yy;
+  m2.xy = fac * -m.xy;
+  m2.yx = fac * -m.yx;
+  m2.yy = fac * m.xx;
+
+  return m2;
 }
 
 mat2 mat2_rotation(float a)
@@ -951,8 +965,114 @@ void mat2_to_array(mat2 m, float* out)
   out[1] = m.xy;
   out[2] = m.yx;
   out[3] = m.yy;
-
 }
+
+/* 3D Matrice Functions */
+
+mat3 mat3_zero()
+{
+  mat3 m;
+
+  m.xx = 0.0f;
+  m.xy = 0.0f;
+  m.xz = 0.0f;
+
+  m.yx = 0.0f;
+  m.yy = 0.0f;
+  m.yz = 0.0f;
+
+  m.zx = 0.0f;
+  m.zy = 0.0f;
+  m.zz = 0.0f;
+
+  return m;
+}
+
+
+mat3 mat3_id()
+{
+  mat3 m;
+
+  m.xx = 1.0f;
+  m.xy = 0.0f;
+  m.xz = 0.0f;
+
+  m.yx = 0.0f;
+  m.yy = 1.0f;
+  m.yz = 0.0f;
+
+  m.zx = 0.0f;
+  m.zy = 0.0f;
+  m.zz = 1.0f;
+
+  return m;
+}
+
+mat3 mat3_new(float xx, float xy, float xz,
+              float yx, float yy, float yz,
+              float zx, float zy, float zz)
+{
+  mat3 m;
+
+  m.xx = xx;
+  m.xy = xy;
+  m.xz = xz;
+
+  m.yx = yx;
+  m.yy = yy;
+  m.yz = yz;
+
+  m.zx = zx;
+  m.zy = zy;
+  m.zz = zz;
+
+  return m;
+}
+
+mat3  mat3_mult_mat3(mat3 m1, mat3 m2)
+{
+  mat3 m;
+  m.xx = (m1.xx * m2.xx) + (m1.xy * m2.yx) + (m1.xz * m2.zx);
+  m.xy = (m1.xx * m2.xy) + (m1.xy * m2.yy) + (m1.xz * m2.zy);
+  m.xz = (m1.xx * m2.xz) + (m1.xy * m2.yz) + (m1.xz * m2.zz);
+
+  m.yx = (m1.yx * m2.xx) + (m1.yy * m2.yx) + (m1.yz * m2.zx);
+  m.yy = (m1.yx * m2.xy) + (m1.yy * m2.yy) + (m1.yz * m2.zy);
+  m.yz = (m1.yx * m2.xz) + (m1.yy * m2.yz) + (m1.yz * m2.zz);
+
+  m.zx = (m1.zx * m2.xx) + (m1.zy * m2.yx) + (m1.zz * m2.zx);
+  m.zy = (m1.zx * m2.xy) + (m1.zy * m2.yy) + (m1.zz * m2.zy);
+  m.zz = (m1.zx * m2.xz) + (m1.zy * m2.yz) + (m1.zz * m2.zz);
+  return m;
+}
+
+
+vec3 mat3_mult_vec3(mat3 m, vec3 v)
+{
+  vec3 vec;
+  vec.x = (m.xx * v.x) + (m.xy * v.y) + (m.xz * v.z);
+  vec.y = (m.yx * v.x) + (m.yy * v.y) + (m.yz * v.z);
+  vec.z = (m.zx * v.x) + (m.zy * v.y) + (m.zz * v.z);
+  return vec;
+}
+
+mat3 mat3_transpose(mat3 m)
+{
+  mat3 m2;
+  m2.xx = m.xx;
+  m2.xy = m.yx;
+  m2.xz = m.zx;
+  
+  m2.yx = m.xy;
+  m2.yy = m.yy;
+  m2.yz = m.zy;
+  
+  m2.zx = m.xz;
+  m2.zy = m.yz;
+  m2.zz = m.zz;
+  return m2;
+}
+
 
 /* Framerate info */
 

@@ -197,6 +197,8 @@ mat2 mat2_mult_mat2(mat2,mat2);
 
 vec2 mat2_mult_vec2(mat2, vec2);
 
+float mat2_det(mat2);
+
 mat2 mat2_transpose(mat2);
 mat2 mat2_inverse(mat2);
 mat2 mat2_rotation(float);
@@ -206,6 +208,43 @@ void mat2_to_array(mat2, float* out);
 
 /* 3D Matrices */
 
+typedef struct {
+  float xx;
+  float xy;
+  float xz;
+
+  float yx;
+  float yy;
+  float yz;
+
+  float zx;
+  float zy;
+  float zz;
+} mat3;
+
+mat3 mat3_id();
+mat3 mat3_zero();
+mat3 mat3_new(float,float,float
+              ,float,float,float
+              ,float,float,float);
+
+mat3 mat3_mult_mat3(mat3, mat3);
+
+vec3 mat3_mult_vec3(mat3, vec3);
+
+float mat3_det(mat3);
+
+mat3 mat3_transpose(mat3);
+mat3 mat3_inverse(mat3);
+
+void mat3_to_array(mat3, float* out);
+void mat3_print(mat3);
+
+mat3 mat3_scale(vec3);
+mat3 mat3_rotation_x(float);
+mat3 mat3_rotation_y(float);
+mat3 mat3_rotation_z(float);
+mat3 mat3_rotation_angle_axis(float angle, vec3 axis);
 
 
 /* Framerate Info */
