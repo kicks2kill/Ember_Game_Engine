@@ -863,7 +863,6 @@ float quat_distance(quat q1, quat q1)
 
 /* Matrice Math */
 /* 2D Matrices */
-//TODO: Add more Matrice functions
 
 mat2 mat2_id()
 {
@@ -1056,6 +1055,13 @@ vec3 mat3_mult_vec3(mat3 m, vec3 v)
   return vec;
 }
 
+float mat3_det(mat3 m)
+{
+  return (m.xx * m.yy * m.zz) + (m.xy * m.yz * m.zx) + (m.xz * m.yx * m.zy) -
+    (m.xz * m.yy * m.zx) - (m.xy * m.yx * m.zz) - (m.xx * m.yz * m.zy);
+}
+
+
 mat3 mat3_transpose(mat3 m)
 {
   mat3 m2;
@@ -1072,6 +1078,85 @@ mat3 mat3_transpose(mat3 m)
   m2.zz = m.zz;
   return m2;
 }
+
+
+mat3 mat3_inverse(mat3 m)
+{
+  float det = mat3_det(m);
+  float fac = 1.0 / det;
+
+  mat3 m2;
+  m2.xx = fac * mat2_det(mat2_new(m.yy, m.yz, m.zy, m.zz));
+  m2.xy = fac * mat2_det(mat2_new(m.xz, m.xy, m.zz, m.zy));
+  m2.xz = fac * mat2_det(mat2_new(m.xy, m.xz, m.yy, m.yz));
+
+  m2.yx = fac * mat2_det(mat2_new(m.yz, m.yx, m.zz, m.zx));
+  m2.yy = fac * mat2_det(mat2_new(m.xx, m.xz, m.zx, m.zz));
+  m2.yz = fac * mat2_det(mat2_new(m.xz, m.xx, m.yz, m.yx));
+  
+  m2.zx = fac * mat2_det(mat2_new(m.yx, m.yy, m.zx, m.zy));
+  m2.zy = fac * mat2_det(mat2_new(m.xy, m.xx, m.zy, m.zx));
+  m2.zz = fac * mat2_det(mat2_new(m.xx, m.xy, m.yx, m.yy));
+
+  return m2;
+}
+
+void mat3_to_array(mat3 m,float* out)
+{
+  out[0] = m.xx;
+  out[1] = m.xy;
+  out[2] = m.xz;
+  out[3] = m.yx;
+  out[4] = m.yy;
+  out[5] = m.yz;
+  out[6] = m.zx;
+  out[7] = m.zy;
+  out[8] = m.zz;
+}
+
+
+void mat3_print(mat3 m)
+{
+  printf("** %4.2f, %4.2f, %4.2f **\n", m.xx,m.xy,m.xz);
+  printf("** %4.2f, %4.2f, %4.2f **\n", m.yx,m.yy,m.yz);
+  printf("** %4.2f, %4.2f, %4.2f **\n", m.zx,m.zy,m.zz);
+}
+
+mat3 mat3_scale(vec3 scal)
+{
+  mat3 m = mat3_id();
+  m.xx = scal.x;
+  m.yy = scal.y;
+  m.zz = scal.z;
+  return m;
+}
+
+mat3 mat3_rotation_x(float a)
+{
+  mat3 m = mat3_id();
+
+  m.yy = cos(a);
+  m.yz = -sin(a);
+  m.zy = sin(a);
+  m.zz = cos(a);
+
+  return m;
+}
+
+mat3 mat3_rotation_y(float a)
+{
+  mat3 m = mat3_id();
+
+  m.xx = cos(a);
+  m.xy = -sin(a);
+  m.yx = sin(a);
+  m.yy = cos(a);
+
+  return m;
+}
+
+//TODO Define the rotation angle axis
+
 
 
 /* Framerate info */

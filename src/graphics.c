@@ -32,3 +32,50 @@ static void graphics_viewport_start()
 
   glViewport(0,0,800,600);
 }
+
+void graphics_init()
+{
+  int video = SDL_InitSubSystem(SDL_INIT_VIDEO);
+
+  if(video == -1)
+    {
+      printf("Cannot init SDL video");
+    }
+
+  window_flags = SDL_WINDOW_OPENGL;
+  window_multisamples = 4;
+  window_multisamplesbuff = 1;
+  window_antialiasing;
+
+  graphics_viewport_start();
+
+  SDL_GL_PrintInfo();
+  SDL_GL_PrintExtensions();
+}
+
+SDL_GLContext* graphics_context_new()
+{
+  SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+  return SDL_GL_CreateContext(screen);
+}
+
+void graphics_context_delete(SDL_GLContext* context)
+{
+  SDL_GL_DeleteContext(context);
+}
+
+void graphics_context_current(SDL_GLContext* context)
+{
+  SDL_GL_MakeCurrent(screen,context);
+}
+
+void graphics_set_antialiasing(int quality)
+{
+  window_antialiasing = quality;
+}
+
+int graphics_get_antialiasing()
+{
+  return window_antialiasing;
+}
+
