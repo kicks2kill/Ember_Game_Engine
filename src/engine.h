@@ -246,6 +246,37 @@ mat3 mat3_rotation_y(float);
 mat3 mat3_rotation_z(float);
 mat3 mat3_rotation_angle_axis(float angle, vec3 axis);
 
+/* 4D Matrices */
+
+typedef struct {
+  float xx; float xy; float xz; float xw;
+  float yx; float yy; float yz; float yw;
+  float zx; float zy; float zz; float zw;
+  float wx; float wy; float wz; float ww;
+} mat4;
+
+
+mat4 mat4_id();
+mat4 mat4_zero();
+mat4 mat4_new(float xx, float xy, float xz, float xw,
+              float yx, float yy, float yz, float yw,
+              float zx, float zy, float zz, float zw,
+              float wx, float wy, float wz, float ww);
+
+float mat4_at(mat4,int, int);
+
+mat4 mat4_set(mat4, int,int,float);
+mat4 mat4_mult_mat4(mat4,mat4);
+
+vec4 mat4_mult_vec4(mat4,vec4);
+vec3 mat4_mult_vec3(mat4, vec3);
+
+mat4 mat4_inverse(mat4);
+float mat4_det(mat4);
+
+
+mat4 mat4_set(mat4,int, int, float);
+mat4 mat4_transpose(mat4);
 
 /* Framerate Info */
 void frame_begin();

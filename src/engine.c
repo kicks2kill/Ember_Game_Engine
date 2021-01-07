@@ -1155,9 +1155,99 @@ mat3 mat3_rotation_y(float a)
   return m;
 }
 
-//TODO Define the rotation angle axis
+mat3 mat3_rotation_z(float a)
+{
+  mat3 m = mat3_id();
+
+  m.xx = cos(a);
+  m.xy = -sin(a);
+  m.yx = sin(a);
+  m.yy = cos(a);
+
+  return m;
+}
+
+mat3 mat3_rotation_angle_axis(float a, vec3 v)
+{
+  mat3 m;
+
+  float cos = cos(a);
+  float sin = sin(a);
+  float i = 1 - cos;
+
+  m.xx = v.x * v.x * i + cos;
+  m.xy = v.x * v.y * i - v.z * sin;
+  m.xz = v.x * v.z * i + v.y * sin;
+
+  m.yx = v.y * v.x * i + v.z * sin;
+  m.yy = v.y * v.y * i + cos;
+  m.yz = v.y * v.z * i - v.x * sin;
+
+  m.zx = v.z * v.x * i - v.y * sin;
+  m.zy = v.z * v.y * i + v.x * sin;
+  m.zz = v.z * v.z * i + cos;
+
+  return m;
+
+}
 
 
+/* 4D Matrice Functions */
+
+/* Zero out the matrice */
+mat4 mat4_zero()
+{
+  mat4 m;
+  m.xx = 0.0f;
+  m.xy = 0.0f;
+  m.xz = 0.0f;
+  m.xw = 0.0f;
+  
+  m.yx = 0.0f;
+  m.yy = 0.0f;
+  m.yz = 0.0f;
+  m.yw = 0.0f;
+  
+  m.zx = 0.0f;
+  m.zy = 0.0f;
+  m.zz = 0.0f;
+  m.zw = 0.0f;
+  
+  m.wx = 0.0f;
+  m.wy = 0.0f;
+  m.wz = 0.0f;
+  m.ww = 0.0f;
+  
+  return m;
+}
+
+
+mat4 mat4_id()
+{
+  mat4 m = mat4_zero();
+
+  m.xx = 1.0f;
+  m.yy = 1.0f;
+  m.zz = 1.0f;
+  m.ww = 1.0f;
+
+  return m;
+}
+
+/* Check location of matrice */
+float mat4_at(mat4 m, int x, int y)
+{
+  float* arr= (float*)(&m);
+  return arr[x + (y*4)];
+}
+
+mat4 mat4_set(mat4 m, int x, int y, float v)
+{
+  float* arr = (float*)(&m);
+  arr[x + (y*4)] = v;
+
+  return m;
+}
 
 /* Framerate info */
 
