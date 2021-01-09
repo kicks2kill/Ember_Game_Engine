@@ -1249,6 +1249,59 @@ mat4 mat4_set(mat4 m, int x, int y, float v)
   return m;
 }
 
+mat4 mat4_transpose(mat4 m)
+{
+  mat4 m2;
+  m2.xx = m.xx;
+  m2.xy = m.yx;
+  m2.xz = m.zx;
+  m2.xw = m.wx;
+  
+  m2.yx = m.xy;
+  m2.yy = m.yy;
+  m2.yz = m.zy;
+  m2.yw = m.wy;
+  
+  m2.zx = m.xz;
+  m2.zy = m.yz;
+  m2.zz = m.zz;
+  m2.zw = m.wz;
+  
+  m2.wx = m.xw;
+  m2.wy = m.yw;
+  m2.wz = m.zw;
+  m2.ww = m.ww;
+  
+  return m2;
+}
+
+mat4 mat4_mult_mat4(mat4 m1, mat4 m2)
+{
+  mat4 mat;
+
+  mat.xx = (m1.xx * m2.xx) + (m1.xy * m2.yx) + (m1.xz * m2.zx) + (m1.xw * m2.wx);
+  mat.xy = (m1.xx * m2.xy) + (m1.xy * m2.yy) + (m1.xz * m2.zy) + (m1.xw * m2.wy);
+  mat.xz = (m1.xx * m2.xz) + (m1.xy * m2.yz) + (m1.xz * m2.zz) + (m1.xw * m2.wz);
+  mat.xw = (m1.xx * m2.xw) + (m1.xy * m2.yw) + (m1.xz * m2.zw) + (m1.xw * m2.ww);
+  
+  mat.yx = (m1.yx * m2.xx) + (m1.yy * m2.yx) + (m1.yz * m2.zx) + (m1.yw * m2.wx);
+  mat.yy = (m1.yx * m2.xy) + (m1.yy * m2.yy) + (m1.yz * m2.zy) + (m1.yw * m2.wy);
+  mat.yz = (m1.yx * m2.xz) + (m1.yy * m2.yz) + (m1.yz * m2.zz) + (m1.yw * m2.wz);
+  mat.yw = (m1.yx * m2.xw) + (m1.yy * m2.yw) + (m1.yz * m2.zw) + (m1.yw * m2.ww);
+ 
+  mat.zx = (m1.zx * m2.xx) + (m1.zy * m2.yx) + (m1.zz * m2.zx) + (m1.zw * m2.wx);
+  mat.zy = (m1.zx * m2.xy) + (m1.zy * m2.yy) + (m1.zz * m2.zy) + (m1.zw * m2.wy);
+  mat.zz = (m1.zx * m2.xz) + (m1.zy * m2.yz) + (m1.zz * m2.zz) + (m1.zw * m2.wz);
+  mat.zw = (m1.zx * m2.xw) + (m1.zy * m2.yw) + (m1.zz * m2.zw) + (m1.zw * m2.ww);
+  
+  mat.wx = (m1.wx * m2.xx) + (m1.wy * m2.yx) + (m1.wz * m2.zx) + (m1.ww * m2.wx);
+  mat.wy = (m1.wx * m2.xy) + (m1.wy * m2.yy) + (m1.wz * m2.zy) + (m1.ww * m2.wy);
+  mat.wz = (m1.wx * m2.xz) + (m1.wy * m2.yz) + (m1.wz * m2.zz) + (m1.ww * m2.wz);
+  mat.ww = (m1.wx * m2.xw) + (m1.wy * m2.yw) + (m1.wz * m2.zw) + (m1.ww * m2.ww);
+  
+  return mat;
+}
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];

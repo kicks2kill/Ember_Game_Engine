@@ -278,6 +278,34 @@ float mat4_det(mat4);
 mat4 mat4_set(mat4,int, int, float);
 mat4 mat4_transpose(mat4);
 
+void mat4_to_array(mat4, float* out);
+void mat4_to_array_transpose(mat4, float* out);
+
+void mat4_print(mat4);
+
+mat4 mat4_translate(vec3);
+mat4 mat4_scale(vec3);
+
+mat4 mat4_rotation_x(float);
+mat4 mat4_rotation_y(float);
+mat4 mat4_rotation_z(float);
+mat4 mat4_rotation_axis_angle(vec3 axis, float angle);
+
+mat4 mat4_rotation_quat(quat);
+mat4 mat4_rotation_euler(float,float, float);
+mat4 mat4_perspective(float fov, float clip_near, float clip_far, float ratio);
+mat4 mat4_ortho(float left, float right, float bottom, float top, float near, float far);
+mat4 mat4_world(vec3 pos, vec3 scale, quat rot);
+
+
+mat4 mat4_lerp(mat4, mat4, float amount);
+
+
+
+
+
+
+
 /* Framerate Info */
 void frame_begin();
 void frame_end();
