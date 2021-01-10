@@ -1563,7 +1563,44 @@ mat4 mat4_rotation_axis_angle(vec3 v, float angle)
 }
 
 
-//TODO: define mat4_rotation_quat, euler, perspective, ortho and world.
+//TODO: define mat4_rotation_quat, euler,  and world.
+
+mat4 mat4_perspective(float fov, float clip_near, float clip_far, float ratio)
+{
+  float left,right,bottom,top;
+
+  right = (-clip_near * tanf(fov));
+  left = -right;
+
+  top = ratio * clip_near * tanf(fov);
+  bottom = -top;
+
+  mat4 projection = mat4_zero();
+  projection.xx = (2.0 * clip_near) / (right - left);
+  projection.yy = (2.0 * clip_near) / (top - bottom);
+  projection.xz = (right + left) / (right - left);
+  projection.yz = (top + bottom) / (top - bottom);
+  projection.zz = (-clip_far - clip_near) / (clip_far - clip_near);
+  projection.wz = -1.0;
+  projection.zw = ( -(2.0 * clip_near) * clip_far) / (clip_far - clip_near);
+
+  return projection;
+}
+
+mat4 mat4_ortho(float left, float right, float bottom,
+                float top, float near, float far)
+{
+  mat4 m = mat4_id();
+  m.xx = 2 / (right - left);
+  m.yy = 2 / (top - bottom);
+  m.zz = 1 / (near - far);
+
+  m.xw = -1 - 2 * left / (right - left);
+  m.yw = 1 + 2 * top / (bottom - top);
+  m.zw = near / (near - far);
+
+  return m;
+}
 
 
 /* Framerate info */
