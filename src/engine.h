@@ -272,12 +272,9 @@ mat4 mat3_to_mat4(mat3);
 vec4 mat4_mult_vec4(mat4,vec4);
 vec3 mat4_mult_vec3(mat4, vec3);
 
-
-mat4 mat4_inverse(mat4);
 float mat4_det(mat4);
+mat4 mat4_inverse(mat4);
 
-
-mat4 mat4_set(mat4,int, int, float);
 mat4 mat4_transpose(mat4);
 
 void mat4_to_array(mat4, float* out);

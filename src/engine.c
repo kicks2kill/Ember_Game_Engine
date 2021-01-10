@@ -1388,7 +1388,105 @@ float mat4_det(mat4 m)
 
 mat4 mat4_inverse(mat4 m)
 {
-  //TODO
+  float deter = mat4_det(m);
+  float fac = 1.0 / deter;
+
+  mat4 m4;
+  m4.xx = fac *  mat3_det(mat3_new(m.yy, m.yz, m.yw,
+                                   m.zy, m.zz, m.zw, m.wy, m.wz, m.ww));
+  m4.xy = fac * -mat3_det(mat3_new(m.yx, m.yz, m.yw,
+                                   m.zx, m.zz, m.zw, m.wx, m.wz, m.ww));
+  m4.xz = fac *  mat3_det(mat3_new(m.yx, m.yy, m.yw,
+                                   m.zx, m.zy, m.zw, m.wx, m.wy, m.ww));
+  m4.xw = fac * -mat3_det(mat3_new(m.yx, m.yy, m.yz,
+                                   m.zx, m.zy, m.zz, m.wx, m.wy, m.wz));
+
+
+  m4.yx = fac * -mat3_det(mat3_new(m.xy, m.xz, m.xw,
+                                   m.zy, m.zz, m.zw, m.wy, m.wz, m.ww));
+  m4.yy = fac *  mat3_det(mat3_new(m.xx, m.xz, m.xw,
+                                   m.zx, m.zz, m.zw, m.wx, m.wz, m.ww));
+  m4.yz = fac * -mat3_det(mat3_new(m.xx, m.xy, m.xw,
+                                   m.zx, m.zy, m.zw, m.wx, m.wy, m.ww));
+  m4.yw = fac *  mat3_det(mat3_new(m.xx, m.xy, m.xz,
+                                   m.zx, m.zy, m.zz, m.wx, m.wy, m.wz));
+
+
+  m4.zx = fac *  mat3_det(mat3_new(m.xy, m.xz, m.xw,
+                                   m.yy, m.yz, m.yw, m.wy, m.wz, m.ww));
+  m4.zy = fac * -mat3_det(mat3_new(m.xx, m.xz, m.xw,
+                                   m.yx, m.yz, m.yw, m.wx, m.wz, m.ww));
+  m4.zz = fac *  mat3_det(mat3_new(m.xx, m.xy, m.xw,
+                                   m.yx, m.yy, m.yw, m.wx, m.wy, m.ww));
+  m4.zw = fac * -mat3_det(mat3_new(m.xx, m.xy, m.xz,
+                                   m.yx, m.yy, m.yz, m.wx, m.wy, m.wz));
+
+
+  m4.wx = fac * -mat3_det(mat3_new(m.xy, m.xz, m.xw
+                                  , m.yy, m.yz, m.yw, m.zy, m.zz, m.zw));
+  m4.wy = fac *  mat3_det(mat3_new(m.xx, m.xz, m.xw,
+                                   m.yx, m.yz, m.yw, m.zx, m.zz, m.zw));
+  m4.wz = fac * -mat3_det(mat3_new(m.xx, m.xy, m.xw,
+                                   m.yx, m.yy, m.yw, m.zx, m.zy, m.zw));
+  m4.ww = fac *  mat3_det(mat3_new(m.xx, m.xy, m.xz,
+                                   m.yx, m.yy, m.yz, m.zx, m.zy, m.zz));
+  m4 = mat4_transpose(m4);
+  return m4;
+}
+
+void mat4_to_array(mat4 m, flaot* out)
+{
+  out[0] = m.xx;
+  out[1] = m.yx;
+  out[2] = m.zx;
+  out[3] = m.wx;
+
+  out[4] = m.xy;
+  out[5] = m.yy;
+  out[6] = m.zy;
+  out[7] = m.wy;
+
+  out[8] = m.xz;
+  out[9] = m.yz;
+  out[10] = m.zz;
+  out[11] = m.wz;
+
+  out[12] = m.xw;
+  out[13] = m.yw;
+  out[14] = m.zw;
+  out[15] = m.ww;
+}
+
+void mat4_to_array_transpose(mat4 m, float* out)
+{
+  out[0] = m.xx;
+  out[1] = m.xy;
+  out[2] = m.xz;
+  out[3] = m.xw;
+
+  out[4] = m.yx;
+  out[5] = m.yy;
+  out[6] = m.yz;
+  out[7] = m.yw;
+
+  out[8] = m.zx;
+  out[9] = m.zy;
+  out[10] = m.zz;
+  out[11] = m.zw;
+
+  out[12] = m.wx;
+  out[13] = m.wy;
+  out[14] = m.wz;
+  out[15] = m.ww; 
+}
+
+void mat4_print(mat4 m)
+{
+  printf("** %4.2f, %4.2f, %4.2f, %4.2f **\n", m.xx, m.xy, m.xz, m.xw);
+  printf("** %4.2f, %4.2f, %4.2f, %4.2f **\n", m.yx, m.yy, m.yz, m.yw);
+  printf("** %4.2f, %4.2f, %4.2f, %4.2f **\n", m.zx, m.zy, m.zz, m.zw);
+  printf("** %4.2f, %4.2f, %4.2f, %4.2f **\n", m.wx, m.wy, m.wz, m.ww);
+  
 }
 
 /* Framerate info */
