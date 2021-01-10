@@ -1489,6 +1489,83 @@ void mat4_print(mat4 m)
   
 }
 
+mat4 mat4_translate(vec3 v)
+{
+  mat4 m = mat4_id();
+  m.xw = v.x;
+  m.yw = v.y;
+  m.zw = v.z;
+  return m;
+}
+
+mat4 mat4_scale(vec3 v)
+{
+  mat4 m = mat4_id();
+  m.xx = v.x;
+  m.yy = v.y;
+  m.zz = v.z;
+  return m;
+}
+
+mat4 mat4_rotation_x(float a)
+{
+  mat4 m = mat4_id();
+
+  m.yy = cos(a);
+  m.yz = -sin(a);
+  m.zy = sin(a);
+  m.zz = cos(a);
+  return m;
+}
+
+mat4 mat4_rotation_y(float a)
+{
+  mat4 m = mat4_id();
+
+  m.xx = cos(a);
+  m.xz = sin(a);
+  m.zx = -sin(a);
+  m.zz = cos(a);
+  return m;
+}
+
+mat4 mat4_rotation_z(float a)
+{
+  mat4 m = mat4_id();
+  m.xx = cos(a);
+  m.xy = -sin(a);
+  m.yx = sin(a);
+  m.yy = cos(a);
+  return m;
+}
+
+mat4 mat4_rotation_axis_angle(vec3 v, float angle)
+{
+  mat4 m = mat4_id();
+
+  float cs = cos(angle);
+  float sn = sin(angle);
+  float nc = 1 - cs;
+
+  m.xx = v.x * v.x * nc + cs;
+  m.xy = v.x * v.y * nc - v.z * sn;
+  m.xz = v.x * v.z * nc + v.y * sn;
+  
+  m.yx = v.y * v.x * nc + v.z * sn;
+  m.yy = v.y * v.y * nc + cs;
+  m.yz = v.y * v.z * nc - v.x * sn;
+  
+  m.zx = v.z * v.x * nc - v.y * sn;
+  m.zy = v.z * v.y * nc + v.x * sn;
+  m.zz = v.z * v.z * nc + cs;
+  
+  return m;
+}
+
+
+//TODO: define mat4_rotation_quat, euler, perspective, ortho and world.
+
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
