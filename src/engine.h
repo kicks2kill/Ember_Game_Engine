@@ -267,9 +267,11 @@ float mat4_at(mat4,int, int);
 
 mat4 mat4_set(mat4, int,int,float);
 mat4 mat4_mult_mat4(mat4,mat4);
+mat4 mat3_to_mat4(mat3);
 
 vec4 mat4_mult_vec4(mat4,vec4);
 vec3 mat4_mult_vec3(mat4, vec3);
+
 
 mat4 mat4_inverse(mat4);
 float mat4_det(mat4);

@@ -1302,6 +1302,95 @@ mat4 mat4_mult_mat4(mat4 m1, mat4 m2)
   return mat;
 }
 
+mat4 mat3_to_mat4(mat3 m)
+{
+  mat4 m4;
+
+  m4.xx = m.xx;
+  m4.xy = m.xy;
+  m4.xz = m.xz;
+  m4.xw = 0.0f;
+
+  m4.yx = m.yx;
+  m4.yy = m.yy;
+  m4.yz = m.yz;
+  m4.yw = 0.0f;
+
+  m4.zx = m.zx;
+  m4.zy = m.zy;
+  m4.zz = m.zz;
+  m4.zw = 0.0f;
+
+  m4.wx = m.wx;
+  m4.wy = m.wy;
+  m4.wz = m.wz;
+  m4.ww = 0.0f;
+
+}
+
+vec4 mat_mult_vec4(mat4 m, vec4 v)
+{
+  vec4 v4;
+  v4.x = (m.xx * v.x) + (m.xy * v.y) + (m.xz * v.z) + (m.xw * v.w);
+  v4.y = (m.yx * v.x) + (m.yy * v.y) + (m.yz * v.z) + (m.yw * v.w);
+  v4.z = (m.zx * v.x) + (m.zy * v.y) + (m.zz * v.z) + (m.zw * v.w);
+  v4.w = (m.wx * v.x) + (m.wy * v.y) + (m.wz * v.z) + (m.ww * v.w);
+  
+  return v4;
+}
+
+vec3 mat4_mult_vec3(mat4 m, vec3 v)
+{
+  vec4 homogenous_v = vec4_new(v.x,v.y,v.z,1);
+  homogenous_v = mat4_mult_vec4(m, homogenous_v);
+
+  homogenous_v = vec4_div(homogenous_v, homogenous_v.w);
+
+  return vec3_new(homogenous.x,homogenous.y, homogenous.z);
+}
+
+mat3 mat4_to_mat3(mat4 m)
+{
+  mat3 m3;
+  m3.xx = m.xx;
+  m3.xy = m.xy;
+  m3.xz = m.xz;
+
+  m3.yx = m.yx;
+  m3.yy = m.yy;
+  m3.yz = m.yz;
+
+  m3.zx = m.zx;
+  m3.zy = m.zy;
+  m3.zz = m.zz;
+
+  return m3;
+}
+
+
+float mat4_det(mat4 m)
+{
+  float cofact_xx =  mat3_det(mat3_new(m.yy, m.yz, m.yw, m.zy,
+                                       m.zz, m.zw, m.wy, m.wz, m.ww));
+
+  float cofact_xy = -mat3_det(mat3_new(m.yx, m.yz, m.yw, m.zx,
+                                       m.zz, m.zw, m.wx, m.wz, m.ww));
+
+  float cofact_xz =  mat3_det(mat3_new(m.yx, m.yy, m.yw, m.zx,
+                                       m.zy, m.zw, m.wx, m.wy, m.ww));
+
+  float cofact_xw = -mat3_det(mat3_new(m.yx, m.yy, m.yz, m.zx,
+                                       m.zy, m.zz, m.wx, m.wy, m.wz));
+  
+  return (cofact_xx * m.xx) + (cofact_xy * m.xy) +
+    (cofact_xz * m.xz) + (cofact_xw * m.xw);
+}
+
+mat4 mat4_inverse(mat4 m)
+{
+  //TODO
+}
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
