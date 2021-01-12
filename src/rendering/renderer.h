@@ -1,5 +1,8 @@
+#ifndef RENDERER_H
+#define RENDERER_H
 #include "common.h"
 #include "entities/camera.h"
+
 
 typedef struct {
 
@@ -15,3 +18,5 @@ typedef struct {
   float exposure_speed;
   float exposure_target;
 } renderer;
+
+#endif
