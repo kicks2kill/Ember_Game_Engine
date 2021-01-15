@@ -815,7 +815,36 @@ quat quat_normalize(quat q)
                     q.z / scale,
                     q.w / scale);
 }
-//from_euler and to_euler need to go here
+
+quat quat_from_euler(vec3 v)
+{
+  float fc1 = cosf(v.z / 2.0f);
+  float fc2 = cosf(v.x / 2.0f);
+  float fc3 = cosf(v.y / 2.0f);
+
+  float fs1 = sinf(v.z / 2.0f);
+  float fs2 = sinf(v.x / 2.0f);
+  float fs3 = sinf(v.y / 2.0f);
+
+  return quat_new( fc1 * fc2 * fs3 - fs1 * fs2 * fc3,
+                   fc1 * fs2 * fc3 + fs1 * fc2 * fs3,
+                   fs1 * fc2 * fc3 - fc1 * fs2 * fs3,
+                   fc1 * fc2 * fc3 + fs1 * fs2 * fs3);
+}
+
+vec3 quat_to_euler(quat q)
+{
+  float sqrx = q.x * q.x;
+  float sqry = q.y * q.y;
+  float sqrz = q.z * q.z;
+  float sqrw = q.w * q.w;
+
+  return vec3_new( asinf( -2.0f * (q.x * q.z - q.y * q.w)),
+                   atan2f(2.0f * ( q.y * q.z + q.x * q.w),
+                          ( -sqrx - sqry + sqrz + sqrw)),
+                   atan2f( 2.0f * (q.x * q.y + q.z * q.w),
+                           (sqrx - sqry - sqrz + sqrw) ));
+}
 
 quat quat_mult_quat(quat q1, quat q2)
 {

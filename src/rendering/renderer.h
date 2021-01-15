@@ -2,6 +2,7 @@
 #define RENDERER_H
 #include "common.h"
 #include "entities/camera.h"
+#include "engine.h"
 
 
 typedef struct {

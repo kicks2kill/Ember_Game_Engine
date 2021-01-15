@@ -156,7 +156,7 @@ void vec4_to_array(vec4, float* out);
 vec4 vec4_lerp(vec4, vec4, float amount);
 
 /* Quaternions */
-//TODO: Add more quaternion functions.
+
 typedef vec4 quat;
 
 quat quat_id();
@@ -170,11 +170,19 @@ quat quat_normalize(quat);
 
 vec3 quat_to_euler(quat);
 
+
 quat quat_mult_quat(quat,quat);
 vec3 quat_mult_vec3(quat, vec3);
 
 quat quat_neg(quat);
 quat quat_scale(quat, float);
+
+float quat_at(quat, int);
+float quat_real(quat);
+
+void quat_to_angle_axis(quat, vec3* axis, float* angle);
+vec3 quat_to_euler(quat);
+
 
 float quat_length(quat);
 float quat_distance(quat, quat);
