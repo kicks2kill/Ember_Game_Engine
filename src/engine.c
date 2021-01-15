@@ -1562,8 +1562,62 @@ mat4 mat4_rotation_axis_angle(vec3 v, float angle)
   return m;
 }
 
+/* I referred to a few textbooks to figure out these rotations, as well
+   as looking at how other engines handled rotations around euler and quat*/
+mat4 mat4_rotation_quat(vec4 v)
+{
+  float x2 = v.x + v.x;
+  float y2 = v.y + v.y;
+  float z2 = v.z + v.z;
 
-//TODO: define mat4_rotation_quat, euler,  and world.
+  float xx = v.x * x2;
+  float yy = v.y * y2;
+  float zz = v.z * z2;
+
+  float xy = v.x * y2;
+  float yz = v.y * z2;
+  float wy = v.w * y2;
+
+  float xz = v.x * z2;
+  float zz = v.z * z2;
+  float wz = v.w * z2;
+
+  return mat4_new( 1.0f - (yy + zz),
+                   xy - wz, xz + wy, 0.0f,
+                   xy + wz, 1.0f - (xx + zz),
+                   yz - wx, 0.0f, xz -wy,
+                   yz + wx, 1.0f - (xx + yy),
+                   0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+mat4 mat4_rotation_euler(float x, float y, float z)
+{
+  mat4 m = mat4_zero();
+
+  float cosx = cos(x);
+  float cosy = cos(y);
+  float cosz = cos(z);
+
+  float sinx = sin(x);
+  float siny = sin(y);
+  float sinz = sin(z);
+
+  m.xx = cosy * cosz;
+  m.yx = -cosx * sinz + sinx * siny * cosz;
+  m.zx = sinx * sinz + cosx * siny * cosz;
+
+  m.xy = cosy * sinz;
+  m.yy = cosx * cosz + sinx * siny * sinz;
+  m.zy = -sinx * cosz + cosx * siny * sinz;
+
+  m.xz = -siny;
+  m.yz = sinx * cosy;
+  m.zz = cosx * cosy;
+
+  m.ww = 1;
+  
+  return m;
+}
 
 mat4 mat4_perspective(float fov, float clip_near, float clip_far, float ratio)
 {
@@ -1602,6 +1656,22 @@ mat4 mat4_ortho(float left, float right, float bottom,
   return m;
 }
 
+
+mat4 mat4_world(vec3 pos, vec3 scale, quat rot)
+{
+  mat4 pos_m, sca_m, rot_m, result;
+
+  pos_m = mat4_translate(pos);
+  rot_m = mat4_rotation_quat(rot);
+  sca_m = mat4_scale(scale);
+
+  result = mat4_id();
+  result = mat4_mult_mat4(result, pos_m);
+  result = mat4_mult_mat4(result, rot_m);
+  result = mat4_mult_mat4(result, sca_m);
+
+  return result;
+}
 
 /* Framerate info */
 
