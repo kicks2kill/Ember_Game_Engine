@@ -304,11 +304,22 @@ mat4 mat4_perspective(float fov, float clip_near, float clip_far, float ratio);
 mat4 mat4_ortho(float left, float right, float bottom, float top, float near, float far);
 mat4 mat4_world(vec3 pos, vec3 scale, quat rot);
 
-
 mat4 mat4_lerp(mat4, mat4, float amount);
 
+/* Plane Geometry */
+typedef struct {
+  vec3 dir;
+  vec3 pos;
+} plane;
 
+plane plane_new(vec3, vec3);
+plane plane_transform(plane,mat4 world, mat3 world_normal);
 
+float plane_distance(plane, vec3 point);
+
+bool point_inside_plane(vec3 point, plane);
+bool point_outside_plane(vec3 point, plane);
+bool point_intersects_plane(vec3 point, plane);
 
 
 

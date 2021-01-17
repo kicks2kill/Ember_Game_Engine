@@ -1702,6 +1702,44 @@ mat4 mat4_world(vec3 pos, vec3 scale, quat rot)
   return result;
 }
 
+/* Plane Geometry */
+
+plane plane_new(vec3 pos, vec3 dir)
+{
+  plane p;
+  p.pos = pos;
+  p.dir = dir;
+  return p;
+}
+
+float plane_distance(plane p, vec3 point)
+{
+  return vec3_dot(vec3_sub(point, p.pos), p.dir);
+}
+
+plane plane_transform(plane p, mat4 world, mat3 world_normal)
+{
+  p.pos = mat4_mult_vec3(world, p.pos);
+  p.dir = mat3_mult_vec3(world_normal, p.dir);
+  p.dir = vec3_normalize(p.dir);
+  return p;
+}
+
+bool point_inside_plane(vec3 point, plane p)
+{
+  return vec3_dot(vec3_sub(point, p.pos), p.dir) < 0;
+}
+
+bool point_outside_plane(vec3 point, plane p)
+{
+  return vec3_dot(vec3_sub(point, p.pos), p.dir) > 0;
+}
+
+bool point_intersects_plane(vec3 point, plane p)
+{
+  return vec3_dot(vec3_sub(point, p.pos), p.dir) == 0;
+}
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
