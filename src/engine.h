@@ -321,6 +321,30 @@ bool point_inside_plane(vec3 point, plane);
 bool point_outside_plane(vec3 point, plane);
 bool point_intersects_plane(vec3 point, plane);
 
+/* Box Geometry */
+typedef struct {
+  plane front;
+  plane back;
+  plane top;
+  plane bottom;
+  plane left;
+  plane right;
+} box;
+
+box box_new(float x_min, float x_max, float y_min,
+            float y_max, float z_min, float z_max);
+
+box box_sphere(vec3 center, float radius);
+box box_transform(box, mat4 world, mat3 world_normal);
+box box_invert(box);
+box box_invert_depth(box);
+box box_invert_width(box);
+box box_invert_height(box);
+
+bool point_inside_box(vec3 point, box);
+bool point_outside_box(vec3 point, box);
+bool point_intersects_box(vec3 point, box b);
+
 
 
 

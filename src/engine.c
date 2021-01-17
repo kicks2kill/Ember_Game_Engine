@@ -1740,6 +1740,104 @@ bool point_intersects_plane(vec3 point, plane p)
   return vec3_dot(vec3_sub(point, p.pos), p.dir) == 0;
 }
 
+/* Box Geometry */
+
+box box_new(float x_min, float x_max, float y_min,
+            float y_max, float z_min, float z_max)
+{
+  box b;
+  b.front = plane_new(vec3_new(0,0, z_max), vec3_new(0,0,1));
+  b.back = plane_new(vec3_new(0,0, z_min), vec3_new(0,0,-1));
+  b.top = plane_new(vec3_new(0,y_max, 0), vec3_new(0,1,0));
+  b.bottom = plane_new(vec3_new(0,y_min, 0), vec3_new(0,-1,0));
+  b.left = plane_new(vec3_new(x_max,0, 0), vec3_new(1,0,0));
+  b.right = plane_new(vec3_new(x_min,0, 0), vec3_new(-1,,0));
+  return b;
+}
+
+box box_sphere(vec3 center, float radius)
+{
+  box b;
+  b.front = plane_new(vec3_add(center, vec3_new(0,0,radius)), vec3_new(0,0,1));
+  b.back = plane_new(vec3_add(center, vec3_new(0,0,-radius)), vec3_new(0,0,-1));
+  b.top = plane_new(vec3_add(center, vec3_new(0, radius, 0)), vec3_new(0,1,0));
+  b.bottom = plane_new(vec3_add(center,vec3_new(0,-radius,0)), vec3_new(0,-1,0));
+  b.left = plane_new(vec3_add(center,vec3_new(radius, 0,0)), vec3_new(1,0,0));
+  b.right = plane_new(vec3_add(center, vec3_new(-radius, 0,0)), vec3_new(-1,0,0));
+  return b;
+}
+
+box box_transform(box b, mat4 world, mat3 world_normal)
+{
+  b.front = plane_transform(b.front, world, world_normal);
+  b.back = plane_transform(b.back, world, world_normal);
+  b.top = plane_transform(b.top, world, world_normal);
+  b.bottom = plane_transform(b.bottom, world, world_normal);
+  b.left = plane_transform(b.left, world, world_normal);
+  b.right = plane_transform(b.right, world, world_normal);
+  return b;
+}
+
+box box_invert(box b)
+{
+  b.front.dir = vec3_neg(b.front.dir);
+  b.back.dir = vec3_neg(b.back.dir);
+  b.top.dir = vec3_neg(b.top.dir);
+  b.bottom.dir = vec3_neg(b.bottom.dir);
+  b.left.dir = vec3_neg(b.left.dir);
+  b.right.dir = vec3_neg(b.right.dir);
+  return b;
+}
+
+box box_invert_depth(box b)
+{
+  b.front.dir = vec3_neg(b.front.dir);
+  b.back.dir = vec3_neg(b.back.dir);
+  return b;
+}
+
+box box_invert_width(box b)
+{
+  b.left.dir = vec3_neg(b.left.dir);
+  b.right.dir = vec3_neg(b.right.dir);
+  return b;
+}
+
+box box_invert_height(box b)
+{
+  b.top.dir = vec3_neg(b.top.dir);
+  b.bottom.dir = vec3_neg(b.bottom.dir);
+  return b;
+}
+
+bool point_inside_box(vec3 point,box b)
+{
+  if (!point_inside_plane(point, b.front))  { return false; }
+  if (!point_inside_plane(point, b.back))   { return false; }
+  if (!point_inside_plane(point, b.top))    { return false; }
+  if (!point_inside_plane(point, b.bottom)) { return false; }
+  if (!point_inside_plane(point, b.left))   { return false; }
+  if (!point_inside_plane(point, b.right))  { return false; }
+  return true; 
+}
+
+bool point_outside_box(vec3 point, box b)
+{
+  return !(point_intersects_box(point,b) || point_inside_box(point,b));
+}
+
+bool point_intersects_box(vec3 point, box b)
+{
+  if (point_intersects_plane(point, b.front)) { return true; }
+  if (point_intersects_plane(point, b.back)) { return true; }
+  if (point_intersects_plane(point, b.top)) { return true; }
+  if (point_intersects_plane(point, b.bottom)) { return true; }
+  if (point_intersects_plane(point, b.left)) { return true; }
+  if (point_intersects_plane(point, b.right)) { return true; }  
+  return false;
+}
+
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
