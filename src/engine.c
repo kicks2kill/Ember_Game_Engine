@@ -1837,6 +1837,25 @@ bool point_intersects_box(vec3 point, box b)
   return false;
 }
 
+/* Frustum  */
+
+frustum frustum_new(vec3 ntr, vec3 ntl, vec3 nbr,
+                    vec3 nbl, vec3 ftr, vec3 ftl, vec3 fbr, vec3 fnl)
+{
+  frustum f;
+  f.ntr = ntr;
+  f.ntl = ntl;
+  f.nbr = nbr;
+  f.nbl = nbl;
+
+  f.ftr = ftr;
+  f.ftl = ftl;
+  f.fbr = fbr;
+  f.fnl = fnl;
+  return f;
+}
+
+//TODO frustum functions
 
 /* Framerate info */
 

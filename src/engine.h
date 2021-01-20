@@ -345,8 +345,21 @@ bool point_inside_box(vec3 point, box);
 bool point_outside_box(vec3 point, box);
 bool point_intersects_box(vec3 point, box b);
 
+/* Frustum */
 
+typedef struct {
+  vec3 ntr, ntl, nbr, nbl;
+  vec3 ftr, ftl, fbr, fnl;
+}frustum;
 
+frustum frustum_new(vec3, vec3, vec3, vec3, vec3, vec3, vec3, vec3);
+frustum frustum_new_clipbox();
+frustum frustum_new_camera(mat4 view, mat4 proj);
+frustum frustum_slice(frustum, float start, float end);
+frustum frustum_transform(frustum, mat4);
+frustum frustum_translate(frustum, vec3);
+
+bool frustum_outside_box(frustum, box);
 
 /* Framerate Info */
 void frame_begin();
