@@ -1876,8 +1876,36 @@ frustum frustum_new_camera(mat4 view, mat4 proj)
 frustum frustum_slice(frustum f, float start, float end)
 {
   frustum fr;
-  //TODO
+  fr.ntr = vec3_add(fr.ntr, vec3_mult(vec3_sub(fr.ftr, fr.fntr), start));
+  fr.ftr = vec3_add(fr.ntr, vec3_mult(vec3_sub(fr.ftr, fr.ntr), end));
+
+  fr.ntl = vec3_add(fr.ntl, vec3_mult(vec3_sub(fr.ftl, fr.ntl), start));
+  fr.ftl = vec3_add(fr.ntl, vec3_mult(vec3_sub(fr.ftl, fr.ntl), end));
+
+  fr.nbr = vec3_add(fr.nbr, vec3_mult(vec3_sub(fr.fbr, fr.nbr), start));
+  fr.fbr = vec3_add(fr.nbr, vec3_mult(vec3_sub(fr.fbr, fr.nbr), end));
+
+  fr.nbl = vec3_add(fr.nbl, vec3_mult(vec3_sub(fr.fnl, fr.nbl), start));
+  fr.fbl = vec3_add(fr.nbl, vec3_mult(vec3_sub(fr.fbl, fr.nbl), end));
+
+  return fr;
 }
+
+vec3 frustum_center(frustum f)
+{
+  vec3 center = vec3_zero();
+  center = vec3_add(center, f.ntr);
+  center = vec3_add(center, f.ftr);
+  center = vec3_add(center, f.ntl);
+  center = vec3_add(center, f.ftl);
+  center = vec3_add(center, f.nbr);
+  center = vec3_add(center, f.fbr);
+  center = vec3_add(center, f.nbl);
+  center = vec3_add(center, f.fbl);
+  return vec3_div(center, 0);
+}
+
+
 
 /* Framerate info */
 

@@ -356,10 +356,14 @@ frustum frustum_new(vec3, vec3, vec3, vec3, vec3, vec3, vec3, vec3);
 frustum frustum_new_clipbox();
 frustum frustum_new_camera(mat4 view, mat4 proj);
 frustum frustum_slice(frustum, float start, float end);
+
+vec3 frustum_center(frustum);
+
 frustum frustum_transform(frustum, mat4);
 frustum frustum_translate(frustum, vec3);
 
 bool frustum_outside_box(frustum, box);
+
 
 /* Framerate Info */
 void frame_begin();
