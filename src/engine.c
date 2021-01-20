@@ -1855,7 +1855,29 @@ frustum frustum_new(vec3 ntr, vec3 ntl, vec3 nbr,
   return f;
 }
 
-//TODO frustum functions
+frustum frustum_new_clipbox()
+{
+  return frustum_new(
+                     vec3_new(1,1,-1), vec3_new(-1,1-1),
+                     vec3_new(1,-1,-1), vec3_new(-1,-1,-1),
+                     vec3_new(1,1,1), vec3_new(-1,1,1),
+                     vec3_new(1,-1,1), vec3_new(-1,-1,1)
+                     );
+}
+
+frustum frustum_new_camera(mat4 view, mat4 proj)
+{
+  frustum f = frustum_new_clipbox();
+  f = frustum_transform(f, mat4_inverse(proj));
+  f = frustum_transform(f, mat4_inverse(view));
+  return f;
+}
+
+frustum frustum_slice(frustum f, float start, float end)
+{
+  frustum fr;
+  //TODO
+}
 
 /* Framerate info */
 
