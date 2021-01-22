@@ -364,6 +364,25 @@ frustum frustum_translate(frustum, vec3);
 
 bool frustum_outside_box(frustum, box);
 
+box frustum_box(frustum);
+
+/* Sphere  */
+typedef struct {
+  vec3 center;
+  float radius;
+} sphere;
+
+sphere sphere_unit();
+sphere sphere_point();
+sphere sphere_new(vec3 center, float radius);
+sphere sphere_merge(sphere, sphere);
+sphere sphere_merge_many(sphere*, int count);
+sphere sphere_transform(sphere, mat4 world);
+sphere sphere_translate(sphere, vec3);
+sphere sphere_scale(sphere, float x);
+sphere sphere_transform_around_space(sphere, mat3 space);
+
+
 
 /* Framerate Info */
 void frame_begin();

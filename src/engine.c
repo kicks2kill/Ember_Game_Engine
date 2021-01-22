@@ -1837,7 +1837,7 @@ bool point_intersects_box(vec3 point, box b)
   return false;
 }
 
-/* Frustum  */
+/* Frustum Functions  */
 
 frustum frustum_new(vec3 ntr, vec3 ntl, vec3 nbr,
                     vec3 nbl, vec3 ftr, vec3 ftl, vec3 fbr, vec3 fnl)
@@ -1906,6 +1906,132 @@ vec3 frustum_center(frustum f)
 }
 
 
+frustum frustum_transform(frustum f, mat4 m)
+{
+  frustum fr;
+  fr.ntr = mat4_mult_vec3(m, f.ntr);
+  fr.ftr = mat4_mult_vec3(m, f.ftr);
+  fr.ntl = mat4_mult_vec3(m, f.ntl);
+  fr.ftl = mat4_mult_vec3(m, f.ftl);
+  fr.nbr = mat4_mult_vec3(m, f.nbr);
+  fr.fbr = mat4_mult_vec3(m, f.fbr);
+  fr.nbl = mat4_mult_vec3(m, f.nbl);
+  fr.fbl = mat4_mult_vec3(m, f.fbl);
+  return fr;
+
+}
+
+frustum frustum_translate(frustum f, vec3 v)
+{
+  frustum fr;
+  fr.ntr = vec3_add(f.ntr, v);
+  fr.ftr = vec3_add(f.ftr, v);
+  fr.ntl = vec3_add(f.ntl, v);
+  fr.ftl = vec3_add(f.ftl, v);
+  fr.nbr = vec3_add(f.nbr, v);
+  fr.fbr = vec3_add(f.fbr, v);
+  fr.nbl = vec3_add(f.nbl, v);
+  fr.fbl = vec3_add(f.fbl, v);
+  return fr;
+}
+
+bool frustum_outside_box(frustum f, box b)
+{
+  printf("frustum_outside_box unimplemented");
+  return false;
+}
+
+box frustum_box(frustum f)
+{
+  box b;
+  b.front = plane_new(f.ftr, vec3_normalize
+                      (vec3_cross(vec3_sub(f.ftl,f.ftr),
+                                  vec3_sub(f.fbr, f.ftr))));
+  b.back = plane_new(f.ntr, vec3_normalize
+                      (vec3_cross(vec3_sub(f.bnr,f.ntr),
+                                  vec3_sub(f.ntl, f.ntr))));
+  b.top = plane_new(f.ntr, vec3_normalize
+                      (vec3_cross(vec3_sub(f.ftr,f.ntr),
+                                  vec3_sub(f.ntl, f.ntr))));
+  b.bottom = plane_new(f.nbr, vec3_normalize
+                      (vec3_cross(vec3_sub(f.nbl,f.nbr),
+                                  vec3_sub(f.fbr, f.nbr))));
+  b.left = plane_new(f.ntl, vec3_normalize
+                      (vec3_cross(vec3_sub(f.ftl,f.ntl),
+                                  vec3_sub(f.nbl, f.ntl))));
+  b.right = plane_new(f.ntr, vec3_normalize
+                      (vec3_cross(vec3_sub(f.nbr,f.ntr),
+                                  vec3_sub(f.ftr, f.ntr))));
+  return b;
+}
+
+
+/* Sphere Functions */
+
+sphere sphere_unit()
+{
+  return sphere_new(vec3_zero(), 1);
+}
+
+sphere sphere_point()
+{
+  return sphere_new(vec3_zero(), 0);
+}
+
+sphere sphere_new(vec3 center, float radius)
+{
+  sphere s;
+  s.center = center;
+  s.radius = radius;
+  return s;
+}
+
+
+sphere sphere_merge(sphere s1, sphere s2)
+{
+  vec3 dir = vec3_sub(s2.center, s1.center);
+  vec3 dirnormal = vec3_noramlize(dir);
+
+  vec3 p0 = vec3_sub(s1.center, vec3_mult(dirnormal, s1.radius));
+  vec3 p1 = vec3_add(s2.center, vec3_mult(dirnormal, s2.radius));
+
+  vec3 center = vec3_div(vec3_add(p0,p1), 2);
+
+  float dist = vec3_dist(center,p0);
+
+  return sphere_new(center, dist);
+}
+
+sphere sphere_merge_many(sphere* s, int count)
+{
+  sphere s1 = s[0];
+  for( int i = 1; i < count; i++)
+    {
+      s1 = sphere_merge(s1, s[i]);
+    }
+
+  return s1;
+}
+
+sphere sphere_transform(sphere s, mat4 world)
+{
+  vec3 center = mat4_mult_vec3(world, s.center);
+  float radius = s.radius * max(max(world.xx, world.yy), world.zz);
+
+  return sphere_new(center, radius);
+}
+
+sphere sphere_translate(sphere s, vec3 x)
+{
+  s.center = vec3_add(s.center, x);
+  return s;
+}
+
+sphere sphere_scale(sphere s, float x)
+{
+  s.radius *= x;
+  return s;
+}
 
 /* Framerate info */
 
