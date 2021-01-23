@@ -382,6 +382,17 @@ sphere sphere_translate(sphere, vec3);
 sphere sphere_scale(sphere, float x);
 sphere sphere_transform_around_space(sphere, mat3 space);
 
+bool sphere_inside_plane(sphere, plane);
+
+bool sphere_outside_frustum(sphere, frustum);
+bool sphere_inside_frustum(sphere, frustum);
+
+bool sphere_intersects_frustum(sphere, frustum);
+bool sphere_outside_sphere(sphere, sphere);
+bool sphere_inside_box(sphere, box);
+bool sphere_outside_box(sphere, box);
+
+
 
 
 /* Framerate Info */

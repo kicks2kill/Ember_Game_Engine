@@ -2033,6 +2033,32 @@ sphere sphere_scale(sphere s, float x)
   return s;
 }
 
+bool sphere_inside_plane(sphere s, plane p)
+{
+  return -plane_distance(p,s.center) > s.radius;
+}
+
+bool sphere_outside_frustum(sphere s, frustum f)
+{
+  return sphere_outside_box(s, frustum_box(f));
+}
+
+bool sphere_inside_box(sphere s, box b)
+{
+  if(!sphere_inside_plane(s, b.front)) {return false;}
+  if(!sphere_inside_plane(s, b.back)) {return false;}
+  if(!sphere_inside_plane(s, b.top)) {return false;}
+  if(!sphere_inside_plane(s, b.bottom)) {return false;}
+  if(!sphere_inside_plane(s, b.left)) {return false;}
+  if(!sphere_inside_plane(s, b.right)) {return false;}
+  return true;
+}
+
+bool sphere_outside_box(sphere s, box b)
+{
+  return !(sphere_inside_box(s,b) || sphere_intersects_box(s,b));
+}
+
 /* Framerate info */
 
 static char frame_rate_string_var[12];
