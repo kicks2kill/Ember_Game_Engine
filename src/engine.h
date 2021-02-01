@@ -404,7 +404,7 @@ double frame_rate();
 double frame_time();
 char* frame_rate_string();
 
-//Get file system path
+
 typedef struct {
   char ptr[MAX_PATH];
 } fpath;
